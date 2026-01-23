@@ -142,7 +142,7 @@ class _SpmapState extends State<Spmap> {
     return Scaffold(
       appBar:AppBar(
         foregroundColor:Colors.red,
-        title:const Text("SP's Foodcourt Map"),
+        title:const Text("SP's Foodcourt Map",),
         backgroundColor:Colors.white,
       ),
       body:Stack(
@@ -171,13 +171,14 @@ class _SpmapState extends State<Spmap> {
               ),
               MarkerLayer(markers: [
                 Marker(point:const LatLng(1.30757,103.78138),
-                width:50,
-                height:50,
+                width:80,
+                height:80,
                 child:Column(children: [
                   TextButton(child:const Text("FC1",
                   style:TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize:14)),
+                    fontSize:14,
+                    decoration:TextDecoration.underline)),
                   onPressed: () {
                        Navigator.pushNamed(context, '/fc1menu');
                   },
@@ -187,13 +188,14 @@ class _SpmapState extends State<Spmap> {
                 )
                 ),
                 Marker(point:const LatLng(1.30883,103.78100),
-                width:50,
-                height:50,
+                width:80,
+                height:80,
                 child:Column(children: [
                   TextButton(child:const Text("FC2",
                   style:TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize:14)),
+                    fontSize:14,
+                    decoration:TextDecoration.underline)),
                   onPressed: () {
                        Navigator.pushNamed(context, '/fc2menu');
                   },
@@ -202,13 +204,14 @@ class _SpmapState extends State<Spmap> {
                 ],
                 )),
                 Marker(point:const LatLng(1.30892,103.77842),
-                width:50,
-                height:50,
+                width:80,
+                height:80,
                 child:Column(children: [
                   TextButton(child:const Text("FC3",
                   style:TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize:14)),
+                    fontSize:14,
+                    decoration:TextDecoration.underline)),
                   onPressed: () {
                       Navigator.pushNamed(context, '/fc3menu');
                   },
@@ -218,13 +221,14 @@ class _SpmapState extends State<Spmap> {
                 )
                 ),
                 Marker(point:const LatLng(1.31118,103.77711),
-                width:50,
-                height:50,
+                width:80,
+                height:80,
                 child:Column(children: [
                   TextButton(child:const Text("FC4",
                   style:TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize:14)),
+                    fontSize:14,
+                    decoration:TextDecoration.underline)),
                   onPressed: () {
                        Navigator.pushNamed(context, '/fc4menu');
                   },
@@ -234,13 +238,14 @@ class _SpmapState extends State<Spmap> {
                 )
                 ),
                 Marker(point:const LatLng(1.30944,103.77703),
-                width:50,
-                height:50,
+                width:80,
+                height:80,
                 child:Column(children: [
                   TextButton(child:const Text("FC5",
                   style:TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize:14)),
+                    fontSize:14,
+                    decoration:TextDecoration.underline)),
                   onPressed: (){
                        Navigator.pushNamed(context, '/fc5menu');
                   },
@@ -250,13 +255,14 @@ class _SpmapState extends State<Spmap> {
                 )
                 ),
                 Marker(point:const LatLng(1.31113,103.77554),
-                width:50,
-                height:50,
+                width:80,
+                height:80,
                 child:Column(children: [
                   TextButton(child:const Text("FC6",
                   style:TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize:14)),
+                    fontSize:14,
+                    decoration:TextDecoration.underline)),
                   onPressed:() {
                        Navigator.pushNamed(context, '/fc6menu');
                   },
@@ -271,8 +277,8 @@ class _SpmapState extends State<Spmap> {
                   markers:[
                     Marker(
                       point:destination!,
-                      width:50,
-                      height:50,
+                      width:80,
+                      height:80,
                       child:const Icon(Icons.location_pin,
                       size:40,
                       color:Colors.red,
