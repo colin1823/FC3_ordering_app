@@ -7,6 +7,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'dart:convert';
 
+import 'package:mobileappproject/fc3menu.dart';
+
 class Spmap extends StatefulWidget {
   const Spmap({super.key});
 
@@ -176,8 +178,8 @@ class _SpmapState extends State<Spmap> {
                   style:TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize:14)),
-                  onPressed: {
-                       
+                  onPressed: () {
+                       Navigator.pushNamed(context, '/fc1menu');
                   },
                   ),
                  const Icon(Icons.location_on, size:30, color:Colors.red), 
@@ -192,8 +194,8 @@ class _SpmapState extends State<Spmap> {
                   style:TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize:14)),
-                  onPressed: {
-                       
+                  onPressed: () {
+                       Navigator.pushNamed(context, '/fc2menu');
                   },
                   ),
                  const Icon(Icons.location_on, size:30, color:Colors.red), 
@@ -207,8 +209,8 @@ class _SpmapState extends State<Spmap> {
                   style:TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize:14)),
-                  onPressed: {
-                       
+                  onPressed: () {
+                      Navigator.pushNamed(context, '/fc3menu');
                   },
                   ),
                  const Icon(Icons.location_on, size:30, color:Colors.red), 
@@ -223,8 +225,8 @@ class _SpmapState extends State<Spmap> {
                   style:TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize:14)),
-                  onPressed: {
-                       
+                  onPressed: () {
+                       Navigator.pushNamed(context, '/fc4menu');
                   },
                   ),
                  const Icon(Icons.location_on, size:30, color:Colors.red),   
@@ -239,8 +241,8 @@ class _SpmapState extends State<Spmap> {
                   style:TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize:14)),
-                  onPressed: {
-                       
+                  onPressed: (){
+                       Navigator.pushNamed(context, '/fc5menu');
                   },
                   ),
                  const Icon(Icons.location_on, size:30, color:Colors.red),   
@@ -255,8 +257,8 @@ class _SpmapState extends State<Spmap> {
                   style:TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize:14)),
-                  onPressed: {
-                       
+                  onPressed:() {
+                       Navigator.pushNamed(context, '/fc6menu');
                   },
                   ),
                  const Icon(Icons.location_on, size:30, color:Colors.red),  
