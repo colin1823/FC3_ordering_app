@@ -44,6 +44,7 @@ dependencies:
   latlong2: ^0.9.1
   custom_info_window: ^1.0.1
   flutter_map: ^7.0.2
+  cloud_firestore: ^6.1.2
 
 
 dev_dependencies:
