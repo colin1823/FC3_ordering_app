@@ -13,7 +13,7 @@ class _LoginvendorsState extends State<Loginvendors> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar:AppBar(backgroundColor: Colors.red,
-                   title:Text("Student login"),
+                   title:Text("Vendor login"),
                    centerTitle: true,
                    ),
                    body:Column(mainAxisAlignment:MainAxisAlignment.center,
