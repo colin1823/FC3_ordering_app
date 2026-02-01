@@ -22,9 +22,9 @@ class FoodItem {
   factory FoodItem.fromSnapshot(DocumentSnapshot doc) {
   Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
   return FoodItem(
-    name: data['item'] ?? data['name'] ?? 'Unknown',     // Your drawing says 'item'
-    price: (data['price'] as num).toDouble(),  // Your drawing says 'price'
-    photoUrl: data['image'] ?? '', // Your drawing says 'image'
+    name: data['item'] ?? data['name'] ?? 'Unknown',
+    price: (data['price'] as num).toDouble(),  
+    photoUrl: data['image'] ?? '', 
     id: doc.id,
     stock: (data['stock'] ?? 0).toInt(),
     stallname:(data['stall'] ?? ''),
@@ -44,4 +44,23 @@ class CartItem {
     required this.selectedaddons,
     required this.totalPrice,
   });
+}
+
+class Userinfo{
+  final int id;
+  final String password;
+
+
+  Userinfo({
+    required this.id,
+    required this.password,
+  });
+
+  factory Userinfo.fromSnapshot(DocumentSnapshot doc1) {
+    Map<String, dynamic> info = doc1.data() as Map<String, dynamic>;
+    return Userinfo(
+        id: (info['id'] as int),
+        password: (info['password'] as String),
+    );
+  }
 }

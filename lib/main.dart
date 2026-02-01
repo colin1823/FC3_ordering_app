@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mobileappproject/screens/page_2_menu.dart';
 import 'package:provider/provider.dart';
-import 'providers/cart_provider.dart';
-import 'providers/auth_provider.dart';
+import 'providers/passworddataservice.dart';
 import 'firebase_options.dart';
 import 'package:mobileappproject/screens/page_1_home.dart';
 import 'package:mobileappproject/screens/page_3_customization.dart';
@@ -17,13 +16,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(
-    MultiProvider(
-        providers: [
-        ChangeNotifierProvider(create: (_) => CartProvider()),
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-      ],
-      child: MaterialApp(
+  runApp(MaterialApp(
         home:HomeScreen(),
         routes:{
           "/page1home":(context)=>HomeScreen(),
@@ -33,7 +26,6 @@ void main() async {
           "/page9payment":(context)=>Page9Payment(),
          // "/page6auth":(context)=>LoginScreen(),
         }
-  )
   )
   );
 }

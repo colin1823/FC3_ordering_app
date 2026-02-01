@@ -4,7 +4,6 @@ import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mobileappproject/providers/fooddataservice.dart';
 import 'package:provider/provider.dart';
-import '../providers/cart_provider.dart';
 import 'page_2_menu.dart';
 import 'page_4_cart.dart';
 import 'page_9_payment.dart';

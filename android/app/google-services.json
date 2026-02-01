@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "410928198107",
-    "project_id": "page2menu",
-    "storage_bucket": "page2menu.firebasestorage.app"
+    "project_number": "427875936714",
+    "project_id": "page6authdart",
+    "storage_bucket": "page6authdart.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:410928198107:android:49f2336e5ac41bef8df7fe",
+        "mobilesdk_app_id": "1:427875936714:android:6231e4d685a7cffa9c0733",
         "android_client_info": {
           "package_name": "com.example.mobileappproject"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDo7tIvZdUJ2gDQpNY9_ZFZonGQcFYvqWQ"
+          "current_key": "AIzaSyCfPAACyDC7B3WhbZTQoRZrIuiDfp2EtGo"
         }
       ],
       "services": {
