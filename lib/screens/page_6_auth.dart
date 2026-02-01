@@ -41,6 +41,10 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Container(child: Image.asset("assets/img/logo.png",
+            height:300),
+            ),
+            SizedBox(height:20),
             Text(
               "FC3 Login",
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),

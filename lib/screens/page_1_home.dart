@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:mobileappproject/providers/fooddataservice.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 import 'page_2_menu.dart';
 import 'page_4_cart.dart';
-import 'page_9_history.dart';
+import 'page_9_payment.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -50,49 +51,31 @@ class _HomeScreenState extends State<HomeScreen> {
           double distance = Geolocator.distanceBetween(
             position.latitude, position.longitude, fc3Location.latitude, fc3Location.longitude
           );
-          isFarAway = distance > 500; // Warning if > 500m
+          if (distance > 500) {
+            isFarAway = true;
+          } else {
+            isFarAway = false;
+          }
         });
       }
     });
   }
 
-  void _handleStallTap(String stallId, String stallName, bool isOpen) {
-    if (!isOpen) return;
-
-    final cart = Provider.of<CartProvider>(context, listen: false);
-    
-    if (!cart.canOrderFromStall(stallId)) {
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text("Different Stall Detected"),
-          content: Text("You have items from another stall. Clear cart to order from $stallName?"),
-          actions: [
-            TextButton(child: Text("Cancel"), onPressed: () => Navigator.pop(ctx)),
-            TextButton(
-              child: Text("Clear & Switch", style: TextStyle(color: Colors.red)),
-              onPressed: () {
-                cart.clearCart();
-                Navigator.pop(ctx);
-                Navigator.push(context, MaterialPageRoute(builder: (_) => MenuScreen(stallId: stallId)));
-              }
-            )
-          ],
-        )
-      );
-    } else {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => MenuScreen(stallId: stallId)));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("FC3 Map"),
+        title: Row(
+          children:[
+            Text("FC3 Map by "),
+            SizedBox(width:8),
+            Image.asset("assets/img/logo.png", height:30),
+          ],
+        ),
         actions: [
-          IconButton(icon: Icon(Icons.history), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => OrderHistoryScreen()))),
-          IconButton(icon: Icon(Icons.shopping_cart), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CartScreen()))),
+          //IconButton(icon: Icon(Icons.history), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => OrderHistoryScreen()))),
+          IconButton(icon: Icon(Icons.shopping_cart), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => Page4Cart()))),
         ],
       ),
       body: Stack(
@@ -101,27 +84,38 @@ class _HomeScreenState extends State<HomeScreen> {
             options: MapOptions(
               // Center map on user if available, otherwise FC3
               center: _userLocation ?? fc3Location, 
-              zoom: 18.0,
+              initialZoom:  16.8,
+              minZoom: 0,
+              maxZoom: 20,
             ),
             children: [
               TileLayer(urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
-              
-              // Layer 1: Stalls (Polygons)
-              PolygonLayer(
-                polygons: [
-                  Polygon(
-                    points: [LatLng(1.3091, 103.7771), LatLng(1.3092, 103.7772), LatLng(1.3090, 103.7773)],
-                    color: Colors.green.withOpacity(0.6),
-                    isFilled: true,
-                    label: "Chicken Rice"
-                  ),
-                ],
-              ),
 
-              // Layer 2: User Location (Marker)
-              if (_userLocation != null)
-                MarkerLayer(
-                  markers: [
+              MarkerLayer(markers: [
+                    Marker(
+                    point: const LatLng(1.30885,103.77818),
+                    width: 140,
+                    height: 140,
+                    child: Column(
+                      children: [
+                        TextButton(
+                          child: const Text("Click to explore FC3 options!",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  decoration: TextDecoration.underline)),
+                          onPressed: () async {
+                            await Fooddataservice.getallmenus();
+                            if(mounted)
+                            {
+                                  Navigator.pushNamed(context, '/page2menu');
+                            }
+                          }
+                        ),
+                        const Icon(Icons.location_on, size: 30, color: Colors.red),
+                      ],
+                    )),
+                  if(_userLocation!=null)
                     Marker(
                       point: _userLocation!,
                       width: 50,
@@ -139,10 +133,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: const EdgeInsets.all(6.0),
                               child: Icon(Icons.my_location, color: Colors.white, size: 20),
                             ),
+                            ),
+                           ],
                           ),
-                        ],
-                      ),
-                    ),
+                       ),
                   ],
                 ),
             ],
@@ -167,18 +161,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            
-          // Debug/Demo Button (Since clicking polygons on mobile is tricky without gesture setup)
-          Positioned(
-            bottom: 20, right: 20,
-            child: FloatingActionButton.extended(
-              onPressed: () => _handleStallTap('stall_01', 'Chicken Rice', true),
-              label: Text("Enter Stall 1"),
-              icon: Icon(Icons.store),
-            ),
-          )
         ],
       ),
-    );
+      );
   }
 }

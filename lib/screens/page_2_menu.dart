@@ -1,63 +1,109 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mobileappproject/providers/fooddataservice.dart';
 import '../models/models.dart';
-import 'page_3_customization.dart';
 
-class MenuScreen extends StatelessWidget {
-  final String stallId;
+class MenuScreen extends StatefulWidget {
+  const MenuScreen({super.key});
 
-  MenuScreen({required this.stallId});
+  @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
 
+class _MenuScreenState extends State<MenuScreen> {
+
+  @override
+void initState() {
+  super.initState();
+  loadMenu();
+}
+
+void loadMenu() async {
+  await Fooddataservice.getallmenus();
+  setState(() {}); // refresh UI after loading
+}
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Menu")),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('stalls')
-            .doc(stallId)
-            .collection('menu')
-            .where(
-              'available',
-              isEqualTo: true,
-            ) // Logic: Filter unavailable items
-            .snapshots(),
-        builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text("No items available currently."));
-          }
+      appBar: AppBar(title: Row(
+          children:[
+            Text("FC3 Food Options by "),
+            SizedBox(width:8),
+            Image.asset("assets/img/logo.png", height:40),
+          ],),),
+      body: Column(
+        children:[
+          const SizedBox(height:10),
+          Expanded(
+            child:ListView.builder(
+              itemCount: Fooddataservice.z.length,
+              itemBuilder: (context, index) {
+                var food=Fooddataservice.z[index];
 
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (ctx, index) {
-              FoodItem food = FoodItem.fromSnapshot(snapshot.data!.docs[index]);
-              return Card(
-                child: ListTile(
-                  leading: Image.network(
-                    food.photoUrl,
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.cover,
-                  ),
-                  title: Text(food.name),
-                  subtitle: Text("\$${food.price.toStringAsFixed(2)}"),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => CustomizationScreen(food: food),
-                      ),
-                    );
+                if(food.stock<=0)
+                {
+                  return const SizedBox.shrink();
+                }
+
+                return GestureDetector(
+                  onTap: (){
+                    Fooddataservice.tappeditem=food.name;
+                    Fooddataservice.tappedprice=food.price;
+                    Fooddataservice.tappedimage=food.photoUrl;
+                    Fooddataservice.tappedid=food.id;
+                    Fooddataservice.stallname=food.stallname;
+
+                    if(Fooddataservice.nodifferentstall()==true){
+                       if(food.stallname=="miniwok")
+                       {
+                            Navigator.pushNamed(context, "/page3customization");
+                      }
+                      else 
+                      {
+                      CartItem newItem=CartItem(
+                        food: food,
+                        quantity: 1,
+                        selectedaddons: [],
+                        totalPrice: food.price,
+                      );
+                      Fooddataservice.addtocart(newItem);
+                      Navigator.pushNamed(context,"/page4cart");
+                    }
+                    }
+                    else
+                    {
+                      showDialog(
+                           context: context,
+                           builder: (context) {
+                             return AlertDialog(
+                                title: Text("Different Stall"),
+                                content: Text("Please clear your cart before ordering from another stall."),
+                           );
+                      });
+                    }
                   },
-                ),
-              );
-            },
-          );
-        },
+                  child: Card(
+                    child: ListTile(
+                      leading: Image.asset(food.photoUrl, width:60, height:60, fit:BoxFit.cover),
+                      title: Text(food.name),
+                      trailing: Text(food.stallname,
+                             style:TextStyle(
+                              fontSize:15,
+                              color: Colors.grey,)),
+                      subtitle: Text("\$${food.price.toStringAsFixed(2)}"),
+                    ),
+                  ),
+
+                );
+              }
+            ) ,)
+        ]
       ),
+      bottomNavigationBar: BottomAppBar(child: Text("*You are only allowed to order food from 1 stall at a time",
+      style:TextStyle(fontSize:20, color:Colors.black)),),
     );
   }
-}
+}   
+
